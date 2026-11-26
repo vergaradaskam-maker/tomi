@@ -41,4 +41,284 @@
 
   .huellas{display:block;width:130px;margin:22px auto}
 
-  .intro{font-family:'Caveat',cursive;font-size:24px;line-height:1.15;text-align:center;max-width:480px;margin:0
+  .intro{font-family:'Caveat',cursive;font-size:24px;line-height:1.15;text-align:center;max-width:480px;margin:0 auto}
+  .como{margin:20px auto 0;max-width:480px;font-size:14px;text-align:center;opacity:.8}
+
+  .ropa{margin:28px 0 8px;border-top:2px solid var(--rosado);border-bottom:2px solid var(--rosado);padding:14px 6px;text-align:center}
+  .ropa b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:var(--terracota)}
+  .ropa p{margin-top:4px;font-size:15px}
+  .ropa.envio{margin-top:0;border-top:0;border-bottom-color:var(--celeste)}
+  .ropa.envio b{color:var(--celeste)}
+
+  .estado{margin:22px 0 0;text-align:center;font-size:14px;opacity:.7}
+  .estado.error{opacity:1;color:#B4462B}
+
+  section{margin-top:34px}
+  h2{display:flex;align-items:center;gap:10px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:22px;padding-bottom:8px;border-bottom:2px solid var(--linea)}
+  h2 svg{width:22px;height:22px;flex:0 0 22px}
+
+  .item{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px dashed var(--linea)}
+  .item .info{flex:1;min-width:0}
+  .item .nombre{font-weight:600;font-size:16px;line-height:1.25}
+  .item .meta{font-size:13px;margin-top:3px;opacity:.7}
+  .item .meta a{color:var(--tinta)}
+  .item .grupo{font-size:13px;margin-top:4px;color:var(--terracota);font-weight:600}
+  .item.tomado .grupo{display:none}
+  .item .cupos{font-size:13px;margin-top:3px;color:var(--caramelo);font-weight:600}
+  .item.tomado .nombre{text-decoration:line-through;text-decoration-color:rgba(61,58,75,.45);opacity:.55}
+  .item.tomado .meta{opacity:.45}
+
+  button{font-family:'Fredoka',sans-serif;cursor:pointer}
+  .btn{flex:0 0 auto;font-weight:600;font-size:15px;background:var(--terracota);color:#fff;border:0;padding:10px 14px;white-space:nowrap}
+  .btn:disabled{opacity:.5;cursor:default}
+  .sello{flex:0 0 auto;font-family:'Caveat',cursive;font-weight:700;font-size:22px;color:var(--salvia);transform:rotate(-4deg);white-space:nowrap;text-align:right;line-height:1}
+  .sello small{display:block;font-family:'Josefin Sans',sans-serif;font-size:12px;font-weight:400;color:var(--tinta);opacity:.7;margin-top:4px}
+  .sello button{background:none;border:0;color:var(--terracota);font-family:'Josefin Sans',sans-serif;font-size:12px;text-decoration:underline;padding:0;margin-top:4px}
+
+  .cierre{margin-top:40px;text-align:center}
+  .cierre .gracias{font-family:'Caveat',cursive;font-size:26px}
+  .cierre .firma{font-family:'Caveat',cursive;font-weight:700;font-size:32px;margin-top:4px}
+
+  .prueba{background:var(--mostaza);color:var(--tinta);font-size:13px;text-align:center;padding:8px 12px}
+
+  .velo{position:fixed;inset:0;background:rgba(61,58,75,.45);display:none;align-items:flex-end;justify-content:center;z-index:20}
+  .velo.abierto{display:flex}
+  .panel{background:var(--papel);width:100%;max-width:640px;padding:24px 22px 28px;border-top:10px solid var(--mostaza)}
+  .panel h3{font-family:'Fredoka',sans-serif;font-weight:600;font-size:21px;line-height:1.2}
+  .panel p{font-size:14px;margin-top:6px;opacity:.8}
+  .panel label{display:block;margin-top:16px;font-size:14px;font-weight:600}
+  .panel textarea{width:100%;margin-top:6px;font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--linea);background:#fff;color:var(--tinta);resize:vertical}
+  .panel textarea:focus{outline:none;border-color:var(--terracota)}
+  .panel input{width:100%;margin-top:6px;font:inherit;font-size:17px;padding:11px 12px;border:1.5px solid var(--linea);background:#fff;color:var(--tinta)}
+  .panel input:focus{outline:none;border-color:var(--terracota)}
+  .acciones{display:flex;gap:10px;margin-top:18px}
+  .acciones .btn{flex:1;padding:13px}
+  .btn2{flex:0 0 auto;font-weight:500;font-size:15px;background:#fff;color:var(--tinta);border:1.5px solid var(--tinta);padding:12px 16px}
+  .aviso{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--tinta);color:#fff;font-size:15px;padding:12px 18px;z-index:30;display:none;max-width:92%;text-align:center}
+
+  @media (max-width:420px){
+    h1{font-size:72px}
+    .item{gap:10px}
+    .btn{font-size:14px;padding:9px 11px}
+  }
+</style>
+</head>
+<body>
+<div class="hoja">
+  <div class="franja"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div id="modoPrueba" class="prueba" hidden>Modo prueba: las reservas se guardan solo en este equipo. Falta conectar la planilla de Google.</div>
+
+  <div class="contenido">
+    <header>
+      <div class="pre">Lista de regalos</div>
+      <div class="kicker">Baby Shower</div>
+      <h1><span>T</span><span>o</span><span>m</span><span>i</span></h1>
+    </header>
+
+    <svg class="huellas" viewBox="0 0 130 22" aria-hidden="true" id="huellas"></svg>
+
+    <p class="intro">Si quieres hacerle un regalo a Tomi, aquí están las cosas que nos ayudarían mucho. Elige uno y anótate, así no se repiten los regalos.</p>
+    <p class="como">Toca <b>Yo lo regalo</b>, escribe tu nombre y listo. Los demás solo verán que ya está reservado.</p>
+    <p class="como">Si quieren juntarse para un regalo más grande, ¡bienvenido! Anótense con el nombre del grupo.</p>
+    <p class="como">Los links son una referencia, puede ser otro modelo similar.</p>
+
+    <div class="ropa">
+      <b>Ropa</b>
+      <p>Siempre bienvenida, en talla de 3 a 6 meses en adelante. La de recién nacido ya la tenemos.</p>
+    </div>
+
+    <div class="ropa envio">
+      <b>Si compras online</b>
+      <p>Puedes enviarlo a Carlos Antúnez 2641, depto. 31, Providencia, Región Metropolitana.</p>
+    </div>
+
+    <div class="estado" id="estado">Cargando la lista...</div>
+
+    <div id="lista"></div>
+
+    <div class="cierre">
+      <div class="gracias">Cualquier duda, escríbenos. ¡Gracias por el cariño!</div>
+      <div class="firma">Con cariño, Camilo y Paula</div>
+    </div>
+  </div>
+  <div class="franja"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</div>
+
+<div class="velo" id="velo">
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitulo">
+    <h3 id="panelTitulo"></h3>
+    <p>Escribe tu nombre (o el de tu grupo) para que Camilo y Paula sepan quién lo regala. En la lista solo se verá como reservado, y el mensaje solo lo leerán ellos.</p>
+    <label for="nombre">Tu nombre o el de tu grupo</label>
+    <input id="nombre" type="text" maxlength="60" autocomplete="name" placeholder="Ej: La tía Claudia, o el tata Manuel">
+    <label for="mensaje">Un mensajito para Tomi <span style="font-weight:400;opacity:.7">(opcional)</span></label>
+    <textarea id="mensaje" maxlength="500" rows="3" placeholder="Escríbele algo a Tomi para cuando sea grande"></textarea>
+    <div class="acciones">
+      <button class="btn2" id="cancelar" type="button">Volver</button>
+      <button class="btn" id="confirmar" type="button">Confirmar</button>
+    </div>
+  </div>
+</div>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const CATEGORIAS = [
+  { titulo: "Paseo y porteo", icono: "paw", color: "#E8775A", items: [
+    { id: "bolso-maternal", nombre: "Bolso maternal de coche Cuadrillé Palo Rosa", url: "https://www.planetamama.cl/products/bolso-maternal-de-coche-cuadrille-rosado-copia", grupo: true },
+    { id: "mudador-bolso", nombre: "Mudador Cuadrillé Palo Rosa (para el bolso)", url: "https://www.planetamama.cl/products/mudador-cuadrille-menta-copia" },
+    { id: "cobertor-coche", nombre: "Cobertor de coche Cuadrillé Palo Rosa (hace juego con el bolso)", url: "https://www.planetamama.cl/products/cobertor-de-coche-cuadrille-palo-rosa", grupo: true },
+    { id: "mochila-weesnug", nombre: "Mochila de porteo Momcozy WeeSnug recién nacido", url: "https://mamasmateas.com/products/portabebe-ergonomico-weesnug-para-recien-nacido-negro-momcozy", grupo: true },
+    { id: "organizador-coche", nombre: "Organizador con portavasos para el coche Momcozy", url: "https://motherna.cl/products/organizador-coche-portavasos-momcozy" }
+  ]},
+  { titulo: "Aseo y cuidado", icono: "bone", color: "#7EB6D9", items: [
+    { id: "pack-weleda", nombre: "Pack bebé caléndula Weleda (champú y gel 400 ml + crema pañal)", url: "https://www.weleda.cl/pack-bebe-calendula/p" },
+    { id: "leche-calendula", nombre: "Leche corporal de caléndula Weleda", url: "https://www.weleda.cl/leche-corporal-de-calendula/p" },
+    { id: "waterwipes", nombre: "Toallitas húmedas WaterWipes mega pack (12 x 60)", url: "https://motherna.cl/products/toallitas-waterwipes-mega-value-pack" },
+    { id: "toallas-capucha", nombre: "Toalla con capucha", url: "https://www.pichintun.com/products/toalla-capucha-perro-bebesit", cantidad: 2 },
+    { id: "aspirador-nasal", nombre: "Aspirador nasal Beaba", url: "https://motherna.cl/products/aspirador-nasal-beaba" },
+    { id: "lima-electrica", nombre: "Lima de uñas eléctrica Bebé Confort", url: "https://infanti.cl/products/lima-electrica-bebe-confort" },
+    { id: "termometro", nombre: "Termómetro Philips Avent", url: "https://babycity.cl/tienda/accesorios/philips-avent-termometro-avent" }
+  ]},
+  { titulo: "Alimentación y descanso", icono: "paw", color: "#8DB89A", items: [
+    { id: "mamadera-pigeon", nombre: "Mamadera Pigeon PPSU SofTouch 160 ml", url: "https://pigeon.cl/products/biberon-softouch-pigeon-ppsu-160ml" },
+    { id: "muselinas", nombre: "Muselinas de algodón Bambino Chita Tropical, pack de 3", url: "https://www.bambino.cl/products/set-3-panales-tuto-beige-chita" }
+  ]},
+  { titulo: "Juego y cambio", icono: "bone", color: "#C98B4E", items: [
+    { id: "alfombra-glom", nombre: "Alfombra antigolpes Glom Universo 150x200", url: "https://glom.cl/products/universo-alfombra-para-bebe-preventa", grupo: true },
+    { id: "cojin-mudador", nombre: "Mudador: cojín impermeable Rosen", url: "https://www.rosen.cl/babyrosen/cojin-mudador-impermeable.html", grupo: true }
+  ]}
+];
+
+const PAW='<ellipse cx="0" cy="2.2" rx="3" ry="2.5"/><ellipse cx="-3.3" cy="-1.4" rx="1.1" ry="1.45"/><ellipse cx="-1.2" cy="-3.4" rx="1.1" ry="1.45"/><ellipse cx="1.2" cy="-3.4" rx="1.1" ry="1.45"/><ellipse cx="3.3" cy="-1.4" rx="1.1" ry="1.45"/>';
+const BONE='<rect x="-3.6" y="-.8" width="7.2" height="1.6"/><circle cx="-3.6" cy="-1" r="1.15"/><circle cx="-3.6" cy="1" r="1.15"/><circle cx="3.6" cy="-1" r="1.15"/><circle cx="3.6" cy="1" r="1.15"/>';
+document.getElementById('huellas').innerHTML=[0,1,2,3,4].map(i=>'<g fill="#F2B84B" transform="translate('+(11+i*27)+','+(i%2?7:15)+') rotate(90) scale(1.05)">'+PAW+'</g>').join('');
+
+const MODO_PRUEBA = !API_URL;
+const CLAVE_LOCAL = 'regalos-tomi-v1';
+let conteos = {};
+let mias = {};
+try{ mias = JSON.parse(localStorage.getItem(CLAVE_LOCAL+'-mias')||'{}'); }catch(e){ mias = {}; }
+function guardarMias(){ try{ localStorage.setItem(CLAVE_LOCAL+'-mias', JSON.stringify(mias)); }catch(e){} }
+
+function tienda(url){ try{ return new URL(url).hostname.replace(/^www\./,''); }catch(e){ return ''; } }
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function aviso(t){ const a=document.getElementById('aviso'); a.textContent=t; a.style.display='block'; clearTimeout(a._t); a._t=setTimeout(()=>a.style.display='none',3500); }
+
+function pintar(){
+  const cont=document.getElementById('lista'); cont.innerHTML='';
+  CATEGORIAS.forEach(cat=>{
+    const sec=document.createElement('section');
+    sec.innerHTML='<h2><svg viewBox="-6 -6 12 12"><g fill="'+cat.color+'">'+(cat.icono==='bone'?BONE:PAW)+'</g></svg>'+esc(cat.titulo)+'</h2>';
+    cat.items.forEach(it=>{
+      const total=it.cantidad||1, usados=Math.min(conteos[it.id]||0,total), libres=total-usados;
+      const mia=mias[it.id];
+      const row=document.createElement('div'); row.className='item'+(libres<=0?' tomado':'');
+      const info=document.createElement('div'); info.className='info';
+      info.innerHTML='<div class="nombre">'+esc(it.nombre)+'</div>'
+        +(it.grupo?'<div class="grupo">🐾 Ideal para regalar en grupo</div>':'')
+        +'<div class="meta">'+(it.url&&/^https:\/\//.test(it.url)?'<a href="'+esc(it.url)+'" target="_blank" rel="noopener">Ver referencia en '+esc(tienda(it.url))+'</a>':'')+'</div>'
+        +(total>1?'<div class="cupos">'+(libres>0?'Quedan '+libres+' de '+total:'Completo')+'</div>':'');
+      row.appendChild(info);
+      if(mia){
+        const s=document.createElement('div'); s.className='sello';
+        s.innerHTML='¡Lo regalas tú!<small>'+esc(mia.nombre)+'</small>';
+        const b=document.createElement('button'); b.type='button'; b.textContent='Anular mi reserva';
+        b.onclick=()=>anular(it); s.appendChild(b); row.appendChild(s);
+      } else if(libres<=0){
+        const s=document.createElement('div'); s.className='sello'; s.textContent='Reservado'; row.appendChild(s);
+      } else {
+        const b=document.createElement('button'); b.className='btn'; b.type='button'; b.textContent='Yo lo regalo';
+        b.onclick=()=>abrir(it); row.appendChild(b);
+      }
+      sec.appendChild(row);
+    });
+    cont.appendChild(sec);
+  });
+}
+
+function leerLocal(){ try{ return JSON.parse(localStorage.getItem(CLAVE_LOCAL+'-prueba')||'[]'); }catch(e){ return []; } }
+function escribirLocal(v){ try{ localStorage.setItem(CLAVE_LOCAL+'-prueba', JSON.stringify(v)); }catch(e){} }
+
+async function cargar(){
+  const est=document.getElementById('estado');
+  if(MODO_PRUEBA){
+    document.getElementById('modoPrueba').hidden=false;
+    conteos={}; leerLocal().forEach(r=>{ conteos[r.id]=(conteos[r.id]||0)+1; });
+    est.textContent=''; pintar(); return;
+  }
+  try{
+    const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(),15000);
+    const r=await fetch(API_URL+'?accion=listar&t='+Date.now(),{signal:ctrl.signal}); clearTimeout(t);
+    const d=await r.json(); conteos=d.conteos||{};
+    Object.keys(mias).forEach(id=>{ if(!(conteos[id]>0)) delete mias[id]; }); guardarMias();
+    est.textContent=''; est.classList.remove('error');
+  }catch(e){
+    est.textContent='No pudimos cargar las reservas. Revisa tu conexión y vuelve a abrir la página.'; est.classList.add('error');
+  }
+  pintar();
+}
+
+async function enviar(datos){
+  if(MODO_PRUEBA){
+    let v=leerLocal();
+    if(datos.accion==='reservar'){
+      const it=buscar(datos.id), total=(it&&it.cantidad)||1;
+      if(v.filter(r=>r.id===datos.id).length>=total) return {ok:false,error:'tomado'};
+      v.push({id:datos.id,nombre:datos.nombre,token:datos.token});
+    } else { v=v.filter(r=>!(r.id===datos.id&&r.token===datos.token)); }
+    escribirLocal(v); return {ok:true};
+  }
+  const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(datos)});
+  return await r.json();
+}
+
+function buscar(id){ for(const c of CATEGORIAS) for(const it of c.items) if(it.id===id) return it; return null; }
+
+let actual=null;
+const velo=document.getElementById('velo'), inp=document.getElementById('nombre');
+function abrir(it){
+  actual=it;
+  document.getElementById('panelTitulo').textContent=it.nombre;
+  try{ inp.value=localStorage.getItem(CLAVE_LOCAL+'-nombre')||''; }catch(e){}
+  document.getElementById('mensaje').value='';
+  velo.classList.add('abierto'); setTimeout(()=>inp.focus(),50);
+}
+function cerrar(){ velo.classList.remove('abierto'); actual=null; }
+document.getElementById('cancelar').onclick=cerrar;
+velo.addEventListener('click',e=>{ if(e.target===velo) cerrar(); });
+inp.addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('mensaje').focus(); });
+
+document.getElementById('confirmar').onclick=async()=>{
+  const nombre=inp.value.trim();
+  if(!nombre){ inp.focus(); aviso('Escribe tu nombre, porfa'); return; }
+  const btn=document.getElementById('confirmar'); btn.disabled=true; btn.textContent='Guardando...';
+  const it=actual, token=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random());
+  try{
+    const mensaje=document.getElementById('mensaje').value.trim();
+    const r=await enviar({accion:'reservar',id:it.id,regalo:it.nombre,nombre:nombre,mensaje:mensaje,token:token});
+    if(r.ok){
+      mias[it.id]={token,nombre}; guardarMias();
+      try{ localStorage.setItem(CLAVE_LOCAL+'-nombre',nombre); }catch(e){}
+      cerrar(); aviso('¡Gracias, '+nombre+'! Quedó reservado.');
+    } else if(r.error==='tomado'){
+      cerrar(); aviso('Uy, alguien lo reservó recién. Elige otro.');
+    } else { aviso('No se pudo guardar. Intenta de nuevo.'); }
+  }catch(e){ aviso('No se pudo guardar. Revisa tu conexión.'); }
+  btn.disabled=false; btn.textContent='Confirmar';
+  await cargar();
+};
+
+async function anular(it){
+  const m=mias[it.id]; if(!m) return;
+  if(!confirm('¿Anular tu reserva de "'+it.nombre+'"?')) return;
+  try{
+    const r=await enviar({accion:'anular',id:it.id,regalo:it.nombre,nombre:m.nombre,token:m.token});
+    if(r.ok){ delete mias[it.id]; guardarMias(); aviso('Reserva anulada.'); }
+    else aviso('No se pudo anular. Escríbele a Camilo o Paula.');
+  }catch(e){ aviso('No se pudo anular. Revisa tu conexión.'); }
+  await cargar();
+}
+
+cargar();
+</script>
+</body>
+</html>
