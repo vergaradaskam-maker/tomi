@@ -87,8 +87,6 @@
   .panel h3{font-family:'Fredoka',sans-serif;font-weight:600;font-size:21px;line-height:1.2}
   .panel p{font-size:14px;margin-top:6px;opacity:.8}
   .panel label{display:block;margin-top:16px;font-size:14px;font-weight:600}
-  .panel textarea{width:100%;margin-top:6px;font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--linea);background:#fff;color:var(--tinta);resize:vertical}
-  .panel textarea:focus{outline:none;border-color:var(--terracota)}
   .panel input{width:100%;margin-top:6px;font:inherit;font-size:17px;padding:11px 12px;border:1.5px solid var(--linea);background:#fff;color:var(--tinta)}
   .panel input:focus{outline:none;border-color:var(--terracota)}
   .acciones{display:flex;gap:10px;margin-top:18px}
@@ -147,11 +145,9 @@
 <div class="velo" id="velo">
   <div class="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitulo">
     <h3 id="panelTitulo"></h3>
-    <p>Escribe tu nombre (o el de tu grupo) para que Camilo y Paula sepan quién lo regala. En la lista solo se verá como reservado, y el mensaje solo lo leerán ellos.</p>
+    <p>Escribe tu nombre (o el de tu grupo) para que Camilo y Paula sepan quién lo regala. En la lista solo se verá como reservado.</p>
     <label for="nombre">Tu nombre o el de tu grupo</label>
     <input id="nombre" type="text" maxlength="60" autocomplete="name" placeholder="Ej: La tía Claudia, o el tata Manuel">
-    <label for="mensaje">Un mensajito para Tomi <span style="font-weight:400;opacity:.7">(opcional)</span></label>
-    <textarea id="mensaje" maxlength="500" rows="3" placeholder="Escríbele algo a Tomi para cuando sea grande"></textarea>
     <div class="acciones">
       <button class="btn2" id="cancelar" type="button">Volver</button>
       <button class="btn" id="confirmar" type="button">Confirmar</button>
@@ -207,118 +203,3 @@ function pintar(){
   const cont=document.getElementById('lista'); cont.innerHTML='';
   CATEGORIAS.forEach(cat=>{
     const sec=document.createElement('section');
-    sec.innerHTML='<h2><svg viewBox="-6 -6 12 12"><g fill="'+cat.color+'">'+(cat.icono==='bone'?BONE:PAW)+'</g></svg>'+esc(cat.titulo)+'</h2>';
-    cat.items.forEach(it=>{
-      const total=it.cantidad||1, usados=Math.min(conteos[it.id]||0,total), libres=total-usados;
-      const mia=mias[it.id];
-      const row=document.createElement('div'); row.className='item'+(libres<=0?' tomado':'');
-      const info=document.createElement('div'); info.className='info';
-      info.innerHTML='<div class="nombre">'+esc(it.nombre)+'</div>'
-        +(it.grupo?'<div class="grupo">🐾 Ideal para regalar en grupo</div>':'')
-        +'<div class="meta">'+(it.url&&/^https:\/\//.test(it.url)?'<a href="'+esc(it.url)+'" target="_blank" rel="noopener">Ver referencia en '+esc(tienda(it.url))+'</a>':'')+'</div>'
-        +(total>1?'<div class="cupos">'+(libres>0?'Quedan '+libres+' de '+total:'Completo')+'</div>':'');
-      row.appendChild(info);
-      if(mia){
-        const s=document.createElement('div'); s.className='sello';
-        s.innerHTML='¡Lo regalas tú!<small>'+esc(mia.nombre)+'</small>';
-        const b=document.createElement('button'); b.type='button'; b.textContent='Anular mi reserva';
-        b.onclick=()=>anular(it); s.appendChild(b); row.appendChild(s);
-      } else if(libres<=0){
-        const s=document.createElement('div'); s.className='sello'; s.textContent='Reservado'; row.appendChild(s);
-      } else {
-        const b=document.createElement('button'); b.className='btn'; b.type='button'; b.textContent='Yo lo regalo';
-        b.onclick=()=>abrir(it); row.appendChild(b);
-      }
-      sec.appendChild(row);
-    });
-    cont.appendChild(sec);
-  });
-}
-
-function leerLocal(){ try{ return JSON.parse(localStorage.getItem(CLAVE_LOCAL+'-prueba')||'[]'); }catch(e){ return []; } }
-function escribirLocal(v){ try{ localStorage.setItem(CLAVE_LOCAL+'-prueba', JSON.stringify(v)); }catch(e){} }
-
-async function cargar(){
-  const est=document.getElementById('estado');
-  if(MODO_PRUEBA){
-    document.getElementById('modoPrueba').hidden=false;
-    conteos={}; leerLocal().forEach(r=>{ conteos[r.id]=(conteos[r.id]||0)+1; });
-    est.textContent=''; pintar(); return;
-  }
-  try{
-    const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(),15000);
-    const r=await fetch(API_URL+'?accion=listar&t='+Date.now(),{signal:ctrl.signal}); clearTimeout(t);
-    const d=await r.json(); conteos=d.conteos||{};
-    Object.keys(mias).forEach(id=>{ if(!(conteos[id]>0)) delete mias[id]; }); guardarMias();
-    est.textContent=''; est.classList.remove('error');
-  }catch(e){
-    est.textContent='No pudimos cargar las reservas. Revisa tu conexión y vuelve a abrir la página.'; est.classList.add('error');
-  }
-  pintar();
-}
-
-async function enviar(datos){
-  if(MODO_PRUEBA){
-    let v=leerLocal();
-    if(datos.accion==='reservar'){
-      const it=buscar(datos.id), total=(it&&it.cantidad)||1;
-      if(v.filter(r=>r.id===datos.id).length>=total) return {ok:false,error:'tomado'};
-      v.push({id:datos.id,nombre:datos.nombre,token:datos.token});
-    } else { v=v.filter(r=>!(r.id===datos.id&&r.token===datos.token)); }
-    escribirLocal(v); return {ok:true};
-  }
-  const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(datos)});
-  return await r.json();
-}
-
-function buscar(id){ for(const c of CATEGORIAS) for(const it of c.items) if(it.id===id) return it; return null; }
-
-let actual=null;
-const velo=document.getElementById('velo'), inp=document.getElementById('nombre');
-function abrir(it){
-  actual=it;
-  document.getElementById('panelTitulo').textContent=it.nombre;
-  try{ inp.value=localStorage.getItem(CLAVE_LOCAL+'-nombre')||''; }catch(e){}
-  document.getElementById('mensaje').value='';
-  velo.classList.add('abierto'); setTimeout(()=>inp.focus(),50);
-}
-function cerrar(){ velo.classList.remove('abierto'); actual=null; }
-document.getElementById('cancelar').onclick=cerrar;
-velo.addEventListener('click',e=>{ if(e.target===velo) cerrar(); });
-inp.addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('mensaje').focus(); });
-
-document.getElementById('confirmar').onclick=async()=>{
-  const nombre=inp.value.trim();
-  if(!nombre){ inp.focus(); aviso('Escribe tu nombre, porfa'); return; }
-  const btn=document.getElementById('confirmar'); btn.disabled=true; btn.textContent='Guardando...';
-  const it=actual, token=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random());
-  try{
-    const mensaje=document.getElementById('mensaje').value.trim();
-    const r=await enviar({accion:'reservar',id:it.id,regalo:it.nombre,nombre:nombre,mensaje:mensaje,token:token});
-    if(r.ok){
-      mias[it.id]={token,nombre}; guardarMias();
-      try{ localStorage.setItem(CLAVE_LOCAL+'-nombre',nombre); }catch(e){}
-      cerrar(); aviso('¡Gracias, '+nombre+'! Quedó reservado.');
-    } else if(r.error==='tomado'){
-      cerrar(); aviso('Uy, alguien lo reservó recién. Elige otro.');
-    } else { aviso('No se pudo guardar. Intenta de nuevo.'); }
-  }catch(e){ aviso('No se pudo guardar. Revisa tu conexión.'); }
-  btn.disabled=false; btn.textContent='Confirmar';
-  await cargar();
-};
-
-async function anular(it){
-  const m=mias[it.id]; if(!m) return;
-  if(!confirm('¿Anular tu reserva de "'+it.nombre+'"?')) return;
-  try{
-    const r=await enviar({accion:'anular',id:it.id,regalo:it.nombre,nombre:m.nombre,token:m.token});
-    if(r.ok){ delete mias[it.id]; guardarMias(); aviso('Reserva anulada.'); }
-    else aviso('No se pudo anular. Escríbele a Camilo o Paula.');
-  }catch(e){ aviso('No se pudo anular. Revisa tu conexión.'); }
-  await cargar();
-}
-
-cargar();
-</script>
-</body>
-</html>
