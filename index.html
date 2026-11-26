@@ -1,3 +1,6 @@
+Este es el texto completo. Cópialo desde `<!DOCTYPE html>` hasta `</html>` y pégalo en GitHub reemplazando todo:
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -47,9 +50,14 @@
   .ropa{margin:28px 0 8px;border-top:2px solid var(--rosado);border-bottom:2px solid var(--rosado);padding:14px 6px;text-align:center}
   .ropa b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:var(--terracota)}
   .ropa p{margin-top:4px;font-size:15px}
+
+  .pack{margin-top:14px;border-left:4px solid var(--rosado);padding:4px 0 0 14px}
+  .pack-tit{font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;color:var(--terracota)}
+  .pack-txt{font-size:13px;margin-top:2px;opacity:.85}
+  .pack .item:last-child{border-bottom:0}
+  .libre{flex:0 0 auto;font-family:'Caveat',cursive;font-weight:700;font-size:20px;color:var(--caramelo);text-align:right;line-height:.95;transform:rotate(-4deg)}
   .ropa.envio{margin-top:0;border-top:0;border-bottom-color:var(--celeste)}
   .ropa.envio b{color:var(--celeste)}
-
   .estado{margin:22px 0 0;text-align:center;font-size:14px;opacity:.7}
   .estado.error{opacity:1;color:#B4462B}
 
@@ -120,17 +128,31 @@
     <p class="como">Si quieren juntarse para un regalo más grande, ¡bienvenido! Anótense con el nombre del grupo.</p>
     <p class="como">Los links son una referencia, puede ser otro modelo similar.</p>
 
-    <div class="ropa">
-      <b>Ropa</b>
-      <p>Siempre bienvenida, en talla de 3 a 6 meses en adelante. La de recién nacido ya la tenemos.</p>
-    </div>
-
-    <div class="ropa envio">
+    <div class="ropa envio" style="margin-top:28px;border-top:2px solid var(--celeste)">
       <b>Si compras online</b>
       <p>Puedes enviarlo a Carlos Antúnez 2641, depto. 31, Providencia, Región Metropolitana.</p>
     </div>
 
     <div class="estado" id="estado">Cargando la lista...</div>
+
+    <section id="libres">
+      <h2><svg viewBox="-6 -6 12 12"><g fill="#EFA3A8"><ellipse cx="0" cy="2.2" rx="3" ry="2.5"/><ellipse cx="-3.3" cy="-1.4" rx="1.1" ry="1.45"/><ellipse cx="-1.2" cy="-3.4" rx="1.1" ry="1.45"/><ellipse cx="1.2" cy="-3.4" rx="1.1" ry="1.45"/><ellipse cx="3.3" cy="-1.4" rx="1.1" ry="1.45"/></g></svg>Siempre bienvenidos</h2>
+      <div class="item">
+        <div class="info">
+          <div class="nombre">Ropa</div>
+          <div class="meta" style="opacity:.8">Talla de 3 a 6 meses en adelante. La de recién nacido ya la tenemos.</div>
+        </div>
+        <div class="libre">Sin<br>anotarse</div>
+      </div>
+      <div class="item">
+        <div class="info">
+          <div class="nombre">Gift card</div>
+          <div class="grupo">🐾 Ideal para regalar en grupo</div>
+          <div class="meta"><a href="https://www.giftcard.cl/gift-card-conejo-bebe.html" target="_blank" rel="noopener">Ver referencia en giftcard.cl</a></div>
+        </div>
+        <div class="libre">Sin<br>anotarse</div>
+      </div>
+    </section>
 
     <div id="lista"></div>
 
@@ -159,9 +181,9 @@
 <script>
 const CATEGORIAS = [
   { titulo: "Paseo y porteo", icono: "paw", color: "#E8775A", items: [
-    { id: "bolso-maternal", nombre: "Bolso maternal de coche Cuadrillé Palo Rosa", url: "https://www.planetamama.cl/products/bolso-maternal-de-coche-cuadrille-rosado-copia", grupo: true },
-    { id: "mudador-bolso", nombre: "Mudador Cuadrillé Palo Rosa (para el bolso)", url: "https://www.planetamama.cl/products/mudador-cuadrille-menta-copia" },
-    { id: "cobertor-coche", nombre: "Cobertor de coche Cuadrillé Palo Rosa (hace juego con el bolso)", url: "https://www.planetamama.cl/products/cobertor-de-coche-cuadrille-palo-rosa", grupo: true },
+    { id: "bolso-maternal", nombre: "Bolso maternal de coche", url: "https://www.planetamama.cl/products/bolso-maternal-de-coche-cuadrille-rosado-copia", pack: "cuadrille" },
+    { id: "mudador-bolso", nombre: "Mudador para el bolso", url: "https://www.planetamama.cl/products/mudador-cuadrille-menta-copia", pack: "cuadrille" },
+    { id: "cobertor-coche", nombre: "Cobertor de coche", url: "https://www.planetamama.cl/products/cobertor-de-coche-cuadrille-palo-rosa", pack: "cuadrille" },
     { id: "mochila-weesnug", nombre: "Mochila de porteo Momcozy WeeSnug recién nacido", url: "https://mamasmateas.com/products/portabebe-ergonomico-weesnug-para-recien-nacido-negro-momcozy", grupo: true },
     { id: "organizador-coche", nombre: "Organizador con portavasos para el coche Momcozy", url: "https://motherna.cl/products/organizador-coche-portavasos-momcozy" }
   ]},
@@ -184,6 +206,10 @@ const CATEGORIAS = [
   ]}
 ];
 
+const PACKS = {
+  cuadrille: { titulo: "Pack Cuadrillé Palo Rosa", texto: "Bolso, mudador y cobertor hacen juego. Se pueden regalar por separado o juntos, ideal en grupo." }
+};
+
 const PAW='<ellipse cx="0" cy="2.2" rx="3" ry="2.5"/><ellipse cx="-3.3" cy="-1.4" rx="1.1" ry="1.45"/><ellipse cx="-1.2" cy="-3.4" rx="1.1" ry="1.45"/><ellipse cx="1.2" cy="-3.4" rx="1.1" ry="1.45"/><ellipse cx="3.3" cy="-1.4" rx="1.1" ry="1.45"/>';
 const BONE='<rect x="-3.6" y="-.8" width="7.2" height="1.6"/><circle cx="-3.6" cy="-1" r="1.15"/><circle cx="-3.6" cy="1" r="1.15"/><circle cx="3.6" cy="-1" r="1.15"/><circle cx="3.6" cy="1" r="1.15"/>';
 document.getElementById('huellas').innerHTML=[0,1,2,3,4].map(i=>'<g fill="#F2B84B" transform="translate('+(11+i*27)+','+(i%2?7:15)+') rotate(90) scale(1.05)">'+PAW+'</g>').join('');
@@ -204,7 +230,16 @@ function pintar(){
   CATEGORIAS.forEach(cat=>{
     const sec=document.createElement('section');
     sec.innerHTML='<h2><svg viewBox="-6 -6 12 12"><g fill="'+cat.color+'">'+(cat.icono==='bone'?BONE:PAW)+'</g></svg>'+esc(cat.titulo)+'</h2>';
+    let packActual=null, cajaPack=null;
     cat.items.forEach(it=>{
+      if(it.pack!==packActual){
+        packActual=it.pack||null; cajaPack=null;
+        if(packActual&&PACKS[packActual]){
+          cajaPack=document.createElement('div'); cajaPack.className='pack';
+          cajaPack.innerHTML='<div class="pack-tit">'+esc(PACKS[packActual].titulo)+'</div><div class="pack-txt">🐾 '+esc(PACKS[packActual].texto)+'</div>';
+          sec.appendChild(cajaPack);
+        }
+      }
       const total=it.cantidad||1, usados=Math.min(conteos[it.id]||0,total), libres=total-usados;
       const mia=mias[it.id];
       const row=document.createElement('div'); row.className='item'+(libres<=0?' tomado':'');
@@ -225,7 +260,7 @@ function pintar(){
         const b=document.createElement('button'); b.className='btn'; b.type='button'; b.textContent='Yo lo regalo';
         b.onclick=()=>abrir(it); row.appendChild(b);
       }
-      sec.appendChild(row);
+      (cajaPack||sec).appendChild(row);
     });
     cont.appendChild(sec);
   });
@@ -316,3 +351,4 @@ cargar();
 </script>
 </body>
 </html>
+```
