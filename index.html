@@ -140,7 +140,7 @@
 
     <div class="cierre">
       <div class="gracias">Cualquier duda, escríbenos. ¡Gracias por acompañarnos!</div>
-      <div class="firma">Con cariño, Camilo y Paula</div>
+      <div class="firma">Con cariño, Camilo y Pali</div>
     </div>
   </div>
   <div class="franja"><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -149,9 +149,9 @@
 <div class="velo" id="velo">
   <div class="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitulo">
     <h3 id="panelTitulo"></h3>
-    <p>Escribe tu nombre (o el de tu grupo) para que Camilo y Paula sepan quién lo regala. En la lista solo se verá como reservado.</p>
+    <p>Escribe tu nombre (o el de tu grupo) para que Camilo y Pali sepan quién lo regala. En la lista solo se verá como reservado.</p>
     <label for="nombre">Tu nombre o el de tu grupo</label>
-    <input id="nombre" type="text" maxlength="60" autocomplete="name" placeholder="Ej: Tío Pancho, o Los primos Vergara">
+    <input id="nombre" type="text" maxlength="60" autocomplete="name" placeholder="Ej: Tío Hugo, o Los primos Vergara">
     <div class="acciones">
       <button class="btn2" id="cancelar" type="button">Volver</button>
       <button class="btn" id="confirmar" type="button">Confirmar</button>
@@ -320,7 +320,7 @@ async function anular(it){
   try{
     const r=await enviar({accion:'anular',id:it.id,token:m.token});
     if(r.ok){ delete mias[it.id]; guardarMias(); aviso('Reserva anulada.'); }
-    else aviso('No se pudo anular. Escríbele a Camilo o Paula.');
+    else aviso('No se pudo anular. Escríbele a Camilo o Pali.');
   }catch(e){ aviso('No se pudo anular. Revisa tu conexión.'); }
   await cargar();
 }
